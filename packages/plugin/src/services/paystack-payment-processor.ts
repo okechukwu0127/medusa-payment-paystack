@@ -31,6 +31,8 @@ export interface PaystackPaymentProcessorConfig
    */
   secret_key: string;
 
+   split_code: string;
+
   /**
    * Disable retries on network errors and 5xx errors on idempotent requests to Paystack
    *
@@ -109,10 +111,13 @@ class PaystackPaymentProcessor extends AbstractPaymentProvider {
     }
 
     try {
+
+      const split_code_value = this.configuration.split_code || "";
       const { data, status, message } =
         await this.paystack.transaction.initialize({
           amount: Number(amount) * 100, // Paystack expects amount in lowest denomination - https://paystack.com/docs/api/#supported-currency
           email,
+          split_code: split_code_value,
           currency: validatedCurrencyCode,
           metadata: {
             session_id,

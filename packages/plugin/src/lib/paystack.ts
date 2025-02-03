@@ -112,12 +112,14 @@ export default class Paystack {
     initialize: ({
       amount,
       email,
+      split_code,
       currency,
       reference,
       metadata,
     }: {
       amount: number;
-      email: string;
+        email: string;
+      split_code:string,
       currency?: string;
       reference?: string;
       metadata?: Record<string, unknown>;
@@ -134,6 +136,7 @@ export default class Paystack {
         body: {
           amount,
           email,
+          split_code,
           currency,
           reference,
           metadata: metadata ? JSON.stringify(metadata) : undefined,
